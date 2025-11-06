@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>社團志願選填系統</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>社團志願選填系統</h1>
+            <p class="subtitle">請填寫至少8個、最多15個不重複的社團志願</p>
+            <div style="margin-top:10px;">
+                <button type="button" id="adminLoginBtn" class="btn btn-secondary" style="padding:6px 12px; font-size:0.9em;">管理員登入</button>
+            </div>
+        </header>
+
+        <div class="notice-section">
+            <h3>注意事項</h3>
+            <ol class="notice-list">
+                <li>每人只填一次，並至少填8個社團志願，至多15個，請勿重覆選填社團</li>
+                <li>社團每學年只選填一次，請同學務必要慎重考慮</li>
+                <li>若最後沒選到自己的志願社團或未在時間內選填社團者，則由學務處統一分配社團</li>
+            </ol>
+        </div>
+
+        <div class="form-section">
+            <div class="student-info">
+                <label for="studentClass">班級：</label>
+                <input type="text" id="studentClass" placeholder="請輸入您的班級" required>
+                
+                <label for="studentSeat">座號：</label>
+                <input type="text" id="studentSeat" placeholder="請輸入您的座號" required>
+                
+                <label for="studentName">姓名：</label>
+                <input type="text" id="studentName" placeholder="請輸入您的姓名" required>
+                
+                <label for="studentId">學號：</label>
+                <input type="text" id="studentId" placeholder="請輸入您的學號" required>
+            </div>
+
+            <div class="clubs-section">
+                <h2>可選社團列表</h2>
+                <div class="clubs-grid" id="clubsGrid">
+                    <!-- 社團選項將由 JavaScript 動態生成 -->
+                </div>
+            </div>
+
+            <div class="selected-section">
+                <h2>已選志願順序</h2>
+                <div class="selected-list" id="selectedList">
+                    <p class="empty-message">尚未選擇任何社團</p>
+                </div>
+                <div class="selection-info">
+                    <p>已選擇：<span id="selectedCount">0</span> / 15 個志願</p>
+                    <p class="warning" id="warningMessage">至少需要填寫 8 個志願</p>
+                </div>
+            </div>
+
+            <div class="actions">
+                <button type="button" id="clearBtn" class="btn btn-secondary">清除全部</button>
+                <button type="button" id="submitBtn" class="btn btn-primary" disabled>提交志願</button>
+            </div>
+        </div>
+
+        <div class="modal" id="resultModal">
+            <div class="modal-content">
+                <span class="close" id="closeModal">&times;</span>
+                <h2>提交結果</h2>
+                <div id="modalBody"></div>
+                <div class="modal-actions">
+                    <button type="button" id="downloadReportBtn" class="btn btn-download">下載報表</button>
+                    <button type="button" id="confirmBtn" class="btn btn-primary">確認</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 管理員面板 -->
+        <div class="modal" id="adminModal">
+            <div class="modal-content">
+                <span class="close" id="closeAdminModal">&times;</span>
+                <h2>管理員面板</h2>
+                <div id="adminBody">
+                    <div class="admin-section">
+                        <h3>系統狀態</h3>
+                        <div style="margin-bottom:15px;">
+                            <button type="button" id="testConnectionBtn" class="btn btn-secondary" style="margin-right:10px;">測試後端連線</button>
+                            <span id="connectionStatus" style="color:#666; font-size:0.9em;"></span>
+                        </div>
+                    </div>
+                    <div class="admin-section">
+                        <h3>社團人數上限設定</h3>
+                        <div id="capacitiesForm"></div>
+                        <button type="button" id="saveCapacitiesBtn" class="btn btn-primary" style="margin-top:10px;">儲存上限</button>
+                    </div>
+                    <div class="admin-actions" style="margin-top:20px; display:flex; gap:10px; flex-wrap: wrap;">
+                        <button type="button" id="exportAllSubmissionsBtn" class="btn btn-download">下載已填報表（Excel）</button>
+                        <button type="button" id="runAssignmentBtn" class="btn btn-primary">執行志願分發</button>
+                        <button type="button" id="downloadAssignmentBtn" class="btn btn-download">下載分發結果（Excel）</button>
+                        <button type="button" id="uploadLocalBackupsBtn" class="btn btn-secondary">上傳本機備援到雲端</button>
+                    </div>
+                    <p id="adminNote" style="margin-top:10px; color:#666; font-size:0.9em;">說明：分發採多輪依志願序進行，每輪對各社團抽籤分配，直至額滿。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
+
